@@ -1,2 +1,1 @@
-# Streamlit app -WIP-
-Simple streamlit application
+# [Project Canopy 2](https://www.projectcanopy.org)
