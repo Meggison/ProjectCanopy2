@@ -269,3 +269,28 @@ class ModelTraining:
         val_logs['iou_score'] = iou_score
 
         return val_logs
+
+"""
+CODE IN CASE NOT USING LIGHTNING
+
+max_score = 0
+epochs = 10
+
+for epoch in range(1, epochs+1):
+    print(f'Epoch: {epoch}')
+
+    # Training
+    # train_epoch(model, loss_fn, metrics, optimizer, train_loader, device, verbose=True)
+    train_logs = ModelTraining.train_epoch(segmodel, criterion, metrics, optimizer, train_dataloader, device, epochs)
+    print(f'Train Loss: {train_logs["loss"]:.4f}, IoU Score: {train_logs["iou_score"]:.4f}')
+
+    # Validation
+    valid_logs = ModelTraining.val_epoch(segmodel, criterion, metrics, valid_dataloader, device, epochs)
+    print(f'Validation Loss: {valid_logs["loss"]:.4f}, IoU Score: {valid_logs["iou_score"]:.4f}')
+
+    # Saving the best model based on IoU score
+    if max_score < valid_logs['iou_score']:
+        max_score = valid_logs['iou_score']
+        torch.save(segmodel, '/kaggle/working/best_model.pth')
+        print('Model saved!')
+"""
