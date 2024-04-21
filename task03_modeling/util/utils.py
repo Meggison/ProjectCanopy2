@@ -1,4 +1,5 @@
 import rasterio as rio
+import torch
 import os
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from shutil import copyfile

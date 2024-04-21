@@ -30,5 +30,8 @@ class LightningModel(L.LightningModule):
     def test_step(self, batch, batch_idx, metric_dict):
         return self.step(batch, batch_idx, "test", metric_dict)
     
+    def predict_step(self, batch, batch_idx, dataloader_idx=0):
+        return self(batch)
+    
     def configure_optimizers(self):
         return self.optimizer
