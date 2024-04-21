@@ -162,7 +162,7 @@ class DataPreprocessing:
                     scene_kwargs['transform'] = dst_transform
                     scene_kwargs['width']= 128
                     scene_kwargs['height']= 128
-                    scene_kwargs['crs'] = dst_crs
+                    scene_kwargs['crs'] = DataPreprocessing.dst_crs
 
                     with rio.open(scenes_reprojected[idx], 'w',**scene_kwargs) as dst:
                         for i, band in enumerate(data, 1):
@@ -180,7 +180,7 @@ class DataPreprocessing:
 
 class ModelTraining:
     @staticmethod
-    def train_epoch(model, loss_fn, metrics, optimizer, train_loader, device, epochs, verbose=True):
+    def train_epoch(model, loss_fn, metrics, optimizer, train_loader, device, epoch, epochs, verbose=True):
         """
         Performs a single training epoch on the provided dataloader.
 
@@ -218,7 +218,7 @@ class ModelTraining:
             total_loss += loss.item()  # accumulate loss
 
             if verbose and (batch_idx + 1) % 100 == 0:
-                print(f'Epoch [{i + 1}/{epochs}], Step [{batch_idx + 1}/{len(train_loader)}], Loss: {loss.item():.4f}')
+                print(f'Epoch [{epoch + 1}/{epochs}], Step [{batch_idx + 1}/{len(train_loader)}], Loss: {loss.item():.4f}')
 
         train_logs['loss'] = total_loss / len(train_loader)
 
@@ -229,7 +229,7 @@ class ModelTraining:
         return train_logs
     
     @staticmethod
-    def validate_epoch(model, loss_fn, metrics, val_loader, device, verbose=True):
+    def validate_epoch(model, loss_fn, metrics, val_loader, batch_idx, device, verbose=True):
         """
         Performs a single validation epoch on the provided dataloader.
 
