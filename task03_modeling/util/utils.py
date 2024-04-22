@@ -338,7 +338,7 @@ class ModelTraining:
 
 # custom iou
 def custom_iou(preds, y):
-    tp, fp, fn, tn = smp.metrics.get_stats(preds, y, mode='binary', threshold=0.5)
+    tp, fp, fn, tn = smp.metrics.get_stats(preds, y.to(torch.int64), mode='binary', threshold=0.5)
     iou = smp.metrics.iou_score(tp, fp, fn, tn, reduction="micro")
     return iou
 

@@ -1,7 +1,6 @@
 import os
 import torch
 import lightning as L
-import seg
 import segmentation_models_pytorch as smp
 
 # assumes a predefined torch model, loss function, and optimizer
