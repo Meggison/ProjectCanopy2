@@ -16,6 +16,7 @@ class LightningModel(L.LightningModule):
         preds = self.model(x)
         # loss = self.loss_fn(preds, y)
         # self.log(metric_name, loss, prog_bar=True)
+        print(y.shape, preds.shape)
         self.log_dict(
             {mode + "_" + k: v(preds, y) for k, v in metric_dict.items()},
             prog_bar=True)
