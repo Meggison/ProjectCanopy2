@@ -12,6 +12,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from pathlib import Path
+import segmentation_models_pytorch as smp
 
 
 class DataPreprocessing:
@@ -334,6 +335,12 @@ class ModelTraining:
         val_logs['iou_score'] = iou_score
 
         return val_logs
+
+# custom iou
+def custom_iou(preds, y):
+    tp, fp, fn, tn = smp.metrics.get_stats(preds, y, mode='binary', threshold=0.5)
+    iou = smp.metrics.iou_score(tp, fp, fn, tn, reduction="micro")
+    return iou
 
 """
 CODE IN CASE NOT USING LIGHTNING

@@ -1,6 +1,8 @@
 import os
 import torch
 import lightning as L
+import seg
+import segmentation_models_pytorch as smp
 
 # assumes a predefined torch model, loss function, and optimizer
 class LightningModel(L.LightningModule):
@@ -10,17 +12,15 @@ class LightningModel(L.LightningModule):
         # self.loss_fn = loss_fn
         self.optimizer = optimizer
         self.metric_dict = metric_dict
-    
+
     def step(self, batch, batch_idx, mode, metric_dict):
         x, y = batch
-        preds = self.model(x)
-        # loss = self.loss_fn(preds, y)
-        # self.log(metric_name, loss, prog_bar=True)
-        print(y.shape, preds.shape)
+        preds = self.model(x)[:, 1, :, :].unsqueeze(1)
+        tmp_dict = {mode + "_" + k: v(preds, y) for k, v in metric_dict.items()}
         self.log_dict(
-            {mode + "_" + k: v(preds, y) for k, v in metric_dict.items()},
+            tmp_dict,
             prog_bar=True)
-        return metric_dict[mode + "_" + "loss"]
+        return tmp_dict[mode + "_" + "loss"]
 
     def training_step(self, batch, batch_idx):
         return self.step(batch, batch_idx, "train", self.metric_dict)
