@@ -6,6 +6,12 @@ from shutil import copyfile
 from sklearn.model_selection import train_test_split
 import numpy as np
 import glob2
+from torch.utils.data import Dataset
+import rioxarray as xrio
+import xarray as xr
+import matplotlib.pyplot as plt
+from torch.utils.data import Dataset, DataLoader
+from pathlib import Path
 
 
 class DataPreprocessing:
@@ -177,6 +183,64 @@ class DataPreprocessing:
                                       resampling=Resampling.nearest)
 
                             dst.write(dest, indexes=i)
+
+    @staticmethod
+    def scale(item: dict):
+        item['image'] = item['image'] / 10000
+        return item
+
+def load_mask(filename):
+    img = xrio.open_rasterio(filename)
+    return img
+
+def load_image_all_channels(filename):
+    img = xrio.open_rasterio(filename)
+    img = img.data.transpose((1, 2, 0)) / 3000  # Normalize image data
+    return img
+
+def load_image_rgb(filename, Flag=True):
+    img = xrio.open_rasterio(filename)
+    if Flag:
+        img = img.data[[1,2,0]].transpose((1, 2, 0)) / 3000  # Normalize image data
+    return img
+
+class CanopyDataset(Dataset):
+    def __init__(self, images_dir: str, mask_dir: str):
+        # initialize directories
+        self.images_dir = Path(images_dir)
+        self.mask_dir = Path(mask_dir)
+        # generate a list of file ids
+        self.ids_img = sorted([file.split('/')[-1] for file in os.listdir(images_dir)])
+        self.ids_mask = sorted([file.split('/')[-1] for file in os.listdir(mask_dir)])
+                
+        # throw an error if no images are found
+        if not self.ids_img or not self.ids_mask:
+            raise RuntimeError(
+                f"No input file found in {images_dir}, make sure you put your images there"
+            )
+            
+    def __len__(self):
+        return len(self.ids_img)
+        
+    # get an example using an index
+    def __getitem__(self, idx):
+        # get the id using index
+        img_name = self.ids_img[idx]
+        mask_name = self.ids_mask[idx]
+
+        img_path = os.path.join(self.images_dir, img_name)
+        mask_path = os.path.join(self.mask_dir, mask_name)
+
+        # load the image and mask
+        mask = load_mask(mask_path)
+        img = load_image_all_channels(img_path)
+        # check if the dimensions match
+        if (img.size == mask.size):
+            print(f"Image {img_name} and mask {mask_name} should be the same size, but are {img.size} and {mask.size}")
+        img = torch.as_tensor(img)
+        img = img.permute(2,0,1)
+        
+        return (img.float(), mask.to_numpy().astype(np.float32))
 
 class ModelTraining:
     @staticmethod

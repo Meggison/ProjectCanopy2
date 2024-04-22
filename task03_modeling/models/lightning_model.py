@@ -21,13 +21,13 @@ class LightningModel(L.LightningModule):
             prog_bar=True)
         return metric_dict[mode + "_" + "loss"]
 
-    def training_step(self, batch, batch_idx, metric_dict):
+    def training_step(self, batch, batch_idx, mode, metric_dict):
         return self.step(batch, batch_idx, "train", metric_dict)
     
-    def validation_step(self, batch, batch_idx, metric_dict):
+    def validation_step(self, batch, batch_idx, mode, metric_dict):
         return self.step(batch, batch_idx, "val", metric_dict)
     
-    def test_step(self, batch, batch_idx, metric_dict):
+    def test_step(self, batch, batch_idx, mode, metric_dict):
         return self.step(batch, batch_idx, "test", metric_dict)
     
     def predict_step(self, batch, batch_idx, dataloader_idx=0):
