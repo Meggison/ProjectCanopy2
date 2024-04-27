@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "AoI_id_082",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "image_AoI": "AoI_id_082", "time_frame": "2023-02-05", "min_date": "2023-02-04", "max_date": "2023-02-06", "sentinel_image_url": "https://apps.sentinel-hub.com/eo-browser/?zoom=14&lat=0.05651&lng=21.81198&themeId=DEFAULT-THEME&visualizationUrl=https%3A%2F%2Fservices.sentinel-hub.com%2Fogc%2Fwms%2Fbd86bcc0-f318-402b-a145-015f85b9427e&datasetId=S2L2A&fromTime=2023-02-05T00%3A00%3A00.000Z&toTime=2023-02-05T23%3A59%3A59.999Z&layerId=1_TRUE_COLOR&demSource3D=%22MAPZEN%22" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.372533109490107, 0.161936931436097 ], [ 22.982110252430058, 0.161886147876859 ], [ 22.982251937729078, 0.706025148822467 ], [ 22.372631261731005, 0.706246638564499 ], [ 22.372533109490107, 0.161936931436097 ] ] ] } }
+]
+}
