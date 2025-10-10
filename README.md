@@ -212,11 +212,7 @@ The training process includes comprehensive data augmentation and validation str
 
 ![Results Comparison](task02_preprocessing/Experiment%20Documentation/src/4.png)
 
-Comparison between ground truth forest masks and model predictions showing high accuracy in forest boundary detection.
-
-![Geographic Analysis](task02_preprocessing/Experiment%20Documentation/src/5.png)
-
-Geographic distribution of training samples across Indonesia, Island ecosystems, and Sabah regions.
+Comparison between ground truth forest masks and model predictions showing high accuracy in forest boundary detection & Geographic distribution of training samples across Indonesia, Island ecosystems, and Sabah regions.
 
 ![Performance Metrics](task02_preprocessing/Experiment%20Documentation/src/6.png)
 
