@@ -220,10 +220,6 @@ Geographic distribution of training samples across Indonesia, Island ecosystems,
 
 ![Performance Metrics](task02_preprocessing/Experiment%20Documentation/src/6.png)
 
-Detailed performance metrics showing model accuracy across different forest types and geographic regions.
-
-![Deployment Pipeline](task02_preprocessing/Experiment%20Documentation/src/7.png)
-
 End-to-end deployment pipeline from satellite data ingestion to final GeoJSON output for integration with GIS systems.
 
 ## Geographic Coverage & Methodology
