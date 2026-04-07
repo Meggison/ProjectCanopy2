@@ -43,8 +43,6 @@ This project addresses the critical need for automated forest monitoring by deve
 
 ## Live Demo
 
-**Experience Project Canopy 2 in action:**
-
 **[StreamCloud Demo](https://17753443e155ee2188b22954db58a2cb457741d4.streamcloud.com)** - Interactive forest monitoring dashboard
 
 *Access token: `17753443e155ee2188b22954db58a2cb457741d4`*
